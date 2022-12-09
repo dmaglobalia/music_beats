@@ -1,0 +1,40 @@
+{%extends 'musicbeats/basic.htm'%}
+{% block title%}Playlist Song{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h3>Alan Walker's Playlist</h3>
+
+
+    {% for i in second %}
+    <div style="padding-top: 3%;">
+        <div class="card mb-3" style="max-width: 940px;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src=" {{i.2}}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: green; font-weight: 550;">{{i.0 }}</h5>
+                        <p class="card-text">Tags: Album</p>
+                        <p class="card-text">Singer: {{i.3}}</p>
+                        {% if user.is_authenticated %}
+                            <audio controls style="padding-top: 2%;" onended="here()">
+                                <source src="{{i.1}}" type="audio/mp3">
+                            </audio>
+                        </form>
+                        {% else %}
+                        <audio controls style="padding-top: 2%;" onended="here()">
+                            <source src="{{i.1}}" type="audio/mp3">
+                        </audio>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

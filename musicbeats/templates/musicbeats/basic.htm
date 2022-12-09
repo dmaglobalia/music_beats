@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="/media/images/soundmanagerv297a-20170601/script/soundmanager2.js"></script>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+  integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />    <title>{% block title %} {% endblock %}</title>
+<script>
+  function goBack() {
+    window.history.back()
+  }
+</script>
+
+<style>
+
+  #myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+    
+  }
+
+  #myBtn:hover {
+    background-color: #555;
+  }
+
+  .button {
+    display: inline-block;
+    border-radius: 4px;
+    border: none;
+    background-color: gray;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px;
+    width: 6rem;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  .button span:after {
+    content: '\00ab';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -20px;
+    transition: 0.5s;
+  }
+
+  .button:hover span {
+  padding-left: 20px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  left: 0;
+}
+</style>
+
+  </head>
+
+  <!-- ############################################## NAVBAR ############################################## -->
+
+
+  <body>
+    {% load static %}
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-angle-double-up fa-lg"></i></button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/"><i class="fas fa-headphones-alt fa-lg"></i>  MusicBeats</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/"><i class="fa fa-home"></i>  Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/musicbeats/songs/"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-collection-play" viewBox="0 2 16 16">
+            <path d="M2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1zm2.765 5.576A.5.5 0 0 0 6 7v5a.5.5 0 0 0 .765.424l4-2.5a.5.5 0 0 0 0-.848l-4-2.5z"/>
+            <path d="M1.5 14.5A1.5 1.5 0 0 1 0 13V6a1.5 1.5 0 0 1 1.5-1.5h13A1.5 1.5 0 0 1 16 6v7a1.5 1.5 0 0 1-1.5 1.5h-13zm13-1a.5.5 0 0 0 .5-.5V6a.5.5 0 0 0-.5-.5h-13A.5.5 0 0 0 1 6v7a.5.5 0 0 0 .5.5h13z"/>
+          </svg>   All Songs</a>
+          </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0" method="GET" action="/musicbeats/search/">
+          <input class="form-control mr-sm-1" name="query" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i>  Search</button>
+        </form>
+      </div>
+      
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav ml-auto"></ul>
+      <li class="nav nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome {{request.user}}</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/musicbeats/c/{{request.user}}"><i class="far fa-user-circle"></i>  Your Channel</a>
+          <a class="dropdown-item" href="/musicbeats/upload/"><i class="fas fa-arrow-alt-to-top"></i>  Upload Music</a>
+          <a class="dropdown-item" href="/musicbeats/watchlater/"><i class="far fa-clock"></i>  Listen Later</a>
+          <a class="dropdown-item" href="/musicbeats/history/"><i class="fas fa-history"></i>  History</a>
+          <button class="dropdown-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i>  Logout</button>
+        </div>
+      </li>
+      </ul>
+      <script>
+        function logout() {
+          Swal.fire({
+            title: 'Are you sure you want to Log out?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+          }).then((result) => {
+            if (result.value) {
+              document.location = "/musicbeats/logout_user/"
+            }
+          })
+        }
+      </script>
+      
+      {% else %}
+        <li class="nav-item">
+          <a class="navbar-brand" href="/musicbeats/signup/">SignUp</a>
+        </li>
+        <li class="nav-item">
+          <a class="navbar-brand" href="/musicbeats/login/">LogIn</a>
+        </li>
+        {% endif %}
+
+    </nav>
+    <div style="padding-top: 2px; padding-bottom: 2px;">
+      <button class="button" style="vertical-align:middle" onclick="goBack()"><span>
+        <b>Back</b></span>
+      </button>
+    </div>
+
+     
+    <script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+
+    {% block body %}
+
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    {% block js %}
+    {% endblock %}
+</body> 
+</html>

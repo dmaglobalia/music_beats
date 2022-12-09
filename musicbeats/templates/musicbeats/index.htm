@@ -1,0 +1,117 @@
+{%extends 'musicbeats/basic.htm'%}
+{% block title%}MusicBeats{% endblock %}
+
+{% block body %}
+    {% load static %} 
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="{% static 'musicbeats/7.jpg'%}" alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="{% static 'musicbeats/5.jpg'%}" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="{% static 'musicbeats/8.jpg'%}" alt="Third slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <!-- ################################ CARDS ##################################################### -->
+
+    <h2 style="padding-left: 8%; padding-top: 2%; font-family: 'Verdana';">Trending Songs</h2>
+
+    <div class="row" style="padding-top: 2%; padding-left: 7%;">
+    {% for i in song %}
+    <div style="padding-left: 2%; padding-top: 1%;">
+    <div class="card" style="width: 18rem;">
+      <img src="/media/{{i.image}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{i.name}}</h5>
+        <p class="card-text" style="color: green;">Tags: {{i.tags}}</p>
+        <p class="card-text" style="color: green;">Movie: {{i.movie}}</p>
+        <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger "><i class="fas fa-play"></i> <b> Listen Song </b></a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  
+  {% if user.is_authenticated %}
+  <hr>
+  <div>
+  <h3 style="padding-left: 8%; padding-top: 2%; font-family: 'Verdana';">Your Listen Later</h3>
+
+  <div class="row" style="padding-top: 2%; padding-left: 7%;">
+    {% for i in watch reversed %}
+    <div style="padding-left: 2%; padding-top: 1%;">
+      <div class="card" style="width: 18rem;">
+        <img src="/media/{{i.image}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{i.name}}</h5>
+          <p class="card-text" style="color: green;">Tags: {{i.tags}}</p>
+          <p class="card-text" style="color: green;">Movie: {{i.movie}}</p>
+          <a href="/musicbeats/songs/{{i.song_id}}" class="btn btn-outline-danger "><i class="fas fa-play"></i> <b> Listen Song </b></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3 style="padding-left: 8%; padding-top: 2%; font-family: 'Verdana';">Your Listen Later</h3>
+      <div class="row" style="padding-top: 2%; padding-left: 7%;">
+          <div style="padding-left: 2%; padding-top: 1%;">
+            <h5>For This You Have To <a href="/musicbeats/signup/">SignUp</a> /  <a href="/musicbeats/login/">LogIn</a> First. </h5>
+          </div>
+      </div>
+  </div>
+  {% endif %}
+  </div>
+  <hr>
+  <h2 style="padding-left: 8%; padding-top: 2%; font-family: 'Verdana';">Artist Playlist</h2>
+
+    <div class="row" style="padding-top: 2%; padding-left: 7%;">
+    
+      <div style="padding-left: 2%; padding-bottom: 3%;">
+        <div class="card" style="width: 18rem;">
+          <img src="{% static 'musicbeats/1280818.jpg'%}" class="card-img-top" alt="Artist Playlist">
+          <div class="card-body">
+            <h5 class="card-title">Arijit Singh</h5>
+            <p class="card-text">Arijit's Top 10 Song Playlist.</p>
+            <a href="/musicbeats/playlist/" class="btn btn-outline-danger"><i class="fas fa-play"></i> <b> Go To Playlist </b></a>
+          </div>
+        </div>
+      </div>
+    
+      <div style="padding-left: 2%; padding-bottom: 3%;">
+        <div class="card" style="width: 18rem;">
+          <img src="{% static 'musicbeats/Alan-Walker43.jpg'%}" class="card-img-top" alt="Artist Playlist">
+          <div class="card-body">
+            <h5 class="card-title">Alan Walker</h5>
+            <p class="card-text">Alan's Top 10 Song Playlist.</p>
+            <a href="/musicbeats/secondplaylist/" class="btn btn-outline-danger"><i class="fas fa-play"></i> <b> Go To Playlist
+              </b></a>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding-left: 2%; padding-bottom: 3%;">
+        <div class="card" style="width: 18rem;">
+          <img src="{% static 'musicbeats/14-146543_m.jpg'%}" class="card-img-top" alt="Artist Playlist">
+          <div class="card-body">
+            <h5 class="card-title">Yo Yo Honey Singh</h5>
+            <p class="card-text">Yo Yo Honey Singh Top 10 Song Playlist.</p>
+            <a href="/musicbeats/thirdplaylist/" class="btn btn-outline-danger"><i class="fas fa-play"></i> <b> Go To Playlist
+              </b></a>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
